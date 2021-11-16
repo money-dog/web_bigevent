@@ -42,12 +42,13 @@ $(function () {
     e.preventDefault();
     $.ajax({
       type: "POST",
-      url: "/api/reguser",
+      url: "/api/reg",
       data: {
-        username: $('#form_reg [name=account]'),
-        password: $('#form_reg [name=password]'),
+        username: $('#form_reg [name="account"]').val(),
+        password: $('#form_reg [name="password"]').val(),
+        repassword: $('#form_reg [name="repassword"]').val(),
       },
-      success: function (res) {
+      function (res) {
         if (res.status != 0) {
           return layer.msg('只想弱弱提示');
         } else {
@@ -59,11 +60,9 @@ $(function () {
 
   $('#form_login').submit(function (e) {
     e.preventDefault();
-    $.ajax({
-      type: "POST",
-      url: "/api/login",
-      data: $(this).serialize(),
-      success: function (res) {
+    $.post("/api/login",
+      $(this).serialize(),
+      function (res) {
         if (res.status != 0) {
           return layer.msg('只想弱弱提示');
         } else {
@@ -71,6 +70,6 @@ $(function () {
           layer.msg('成功');
         }
       }
-    });
+    );
   })
 });
